@@ -70,6 +70,12 @@ pub(crate) use bitmask;
 /// remaining 80 are random. The first 48 provide for lexicographic sorting and
 /// the remaining 80 ensure that the identifier is unique.
 #[derive(Debug, PartialOrd, Ord, PartialEq, Eq, Hash, Clone, Copy)]
+#[cfg_attr(
+    feature = "rkyv",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize),
+    archive(compare(PartialEq)),
+    archive_attr(derive(Clone, Copy, Debug))
+)]
 pub struct Ulid(pub u128);
 
 impl Ulid {
